@@ -77,7 +77,7 @@ var xui;
 (function() {
   var undefined;
 	
-	var xui = function(q) {
+	xui = function(q) {
 		q = q || document;
 		return this.find(q);
 	},
@@ -109,7 +109,7 @@ var xui;
       
 			for(i = 0; i < qlen; i++ ) {
 				if (typeof q[i] == 'string' ) { // one selector
-					list = document.querySelectorAll(q[i]);
+					list = document.querySelectorAll ? document.querySelectorAll(q[i]) : Sizzle(q[i]);
 					size = list.length;
 					for(j = 0; j < size; j++ ) {          
 						ele.push(list[j]);   
@@ -117,7 +117,7 @@ var xui;
 				} else {
 					if (q[i] instanceof Array) { // an array of selectors
 						for (var x = 0; x < q[i].length; x++) {
-							list = document.querySelectorAll(q[i][x]);
+								list = document.querySelectorAll ? document.querySelectorAll(q[i][x]) : Sizzle(q[i][x]);
 							size = list.length;
 							for(j = 0; j < size; j++ ) {          
 								ele.push(list[j]);   
@@ -248,7 +248,8 @@ var xui;
 	};
 	
 	var libs = [];
-	
+
+	//= require <sizzle>
 	//= require <dom>
 	//= require <event>
 	//= require <style>
@@ -267,6 +268,7 @@ var xui;
 })();
 
 //= require <emile>
+//= require <compat>
 
 /* LICENSE
 * ---
